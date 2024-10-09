@@ -1,8 +1,25 @@
+import { prisma } from "@/src/lib/prisma"
 
-export default function OrderPage({ params } : { params : { category : string}}) {
+async function getProducts ( category : string ) { 
+    const products = await prisma.product.findMany({
+        where : { 
+            category : { 
+                slug  : category 
+            }
+        }
+    })
 
-    console.log( params.category )
-    
+    return products
+}
+
+
+
+export default  async function OrderPage({ params } : { params : { category : string}}) {
+
+    const product = await getProducts( params.category )
+
+    console.log( product )
+
     return (
         <div>
             OrderPage
