@@ -1,3 +1,5 @@
+import ProductCard from "@/app/components/products/ProductCard"
+import { products } from "@/prisma/data/product"
 import { prisma } from "@/src/lib/prisma"
 
 async function getProducts ( category : string ) { 
@@ -16,13 +18,20 @@ async function getProducts ( category : string ) {
 
 export default  async function OrderPage({ params } : { params : { category : string}}) {
 
-    const product = await getProducts( params.category )
+    const products = await getProducts( params.category )
 
-    console.log( product )
+    console.log( products )
 
     return (
-        <div>
-            OrderPage
-        </div>
+        <>
+            <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-4 items-start">
+                {products.map( product => (
+                    <ProductCard
+                        key={product.id}
+                        product={product}
+                    />
+                ))}
+            </div>
+        </>
     )
 }
