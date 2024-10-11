@@ -5,6 +5,7 @@ import { Product } from "@prisma/client";
 interface Store { 
     order : OrderItem[]
     addToCart: ( product : Product) => void
+    increaseQuantity : ( id : Product['id'] ) => void
 }
 
 export const useStore = create<Store>((set , get ) => ({
@@ -42,4 +43,22 @@ export const useStore = create<Store>((set , get ) => ({
             order : item
         }))
     },
+
+    increaseQuantity( id ) {
+
+        let item : OrderItem[] = []
+   
+        // actualizando el elemento
+        item = get().order.map( item => item.id == id ? { 
+            ...item,
+            quantity : item.quantity + 1,
+            subtotal : item.price *  ( item.quantity  + 1 )
+        }  : item )
+
+        // seteamos en el state
+        set(() => ({
+            order : item
+        }))
+
+    }
 }))
