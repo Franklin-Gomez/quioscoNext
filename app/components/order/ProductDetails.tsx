@@ -1,5 +1,6 @@
 import { OrderItem } from "@/src/types"
 import { XCircleIcon , MinusIcon , PlusIcon } from "@heroicons/react/24/solid"
+import { formatCurrency } from "@/src/utils"
 
 type ProductCardPros = { 
     item : OrderItem
@@ -20,7 +21,7 @@ export default function ProductDetails( { item } : ProductCardPros) {
                     </button>
                 </div>
                 <p className="text-2xl text-amber-500 font-black">
-                    { item.price}
+                    { formatCurrency (item.price ) }
                 </p>
                 <div className="flex gap-5 px-10 py-2 bg-gray-100 w-fit rounded-lg">
                     <button
@@ -44,7 +45,7 @@ export default function ProductDetails( { item } : ProductCardPros) {
                 <p className="text-xl font-black text-gray-700">
                     Subtotal: {''}
                     <span className="font-normal"> 
-
+                        { item.subtotal }
                     </span>
                 </p>
             </div>

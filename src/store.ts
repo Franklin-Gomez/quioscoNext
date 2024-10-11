@@ -7,19 +7,39 @@ interface Store {
     addToCart: ( product : Product) => void
 }
 
-export const useStore = create<Store>((set) => ({
+export const useStore = create<Store>((set , get ) => ({
     order : [] , 
 
     addToCart( product ) {
         
         const { image , categoryId , ...data } = product
 
-        set(( state ) => ({
-            order : [...state.order , { 
-                ...data,
-                quantity : 1 ,
-                subtotal : 1 * product.price
+        let item : OrderItem[] = []
+
+        // comprobar si el elemento ya existe en el state
+        if( get().order.find(( item ) => item.id == data.id ) ) { 
+
+            // actualizando el elemento
+            item = get().order.map( item => item.id == data.id ? { 
+                ...item,
+                quantity : item.quantity + 1,
+                subtotal : item.price *  ( item.quantity  + 1 )
+            }  : item )
+
+        }else { 
+
+            // si no esta en el carrito lo iremos almacenando
+            item = [ ...get().order , { 
+                ...data , 
+                quantity : 1 , 
+                subtotal : 1 *  product.price
             }]
+           
+        }
+
+        // seteamos en el state
+        set(() => ({
+            order : item
         }))
     },
 }))
