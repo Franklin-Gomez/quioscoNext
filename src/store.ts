@@ -6,6 +6,7 @@ interface Store {
     order : OrderItem[]
     addToCart: ( product : Product) => void
     increaseQuantity : ( id : Product['id'] ) => void
+    decreaseQuantity : ( id : Product['id'] ) => void
 }
 
 export const useStore = create<Store>((set , get ) => ({
@@ -60,5 +61,25 @@ export const useStore = create<Store>((set , get ) => ({
             order : item
         }))
 
+    },
+    
+    
+    decreaseQuantity( id ) {
+
+        let item : OrderItem[] = []
+   
+        // actualizando el elemento
+        item = get().order.map( item => item.id == id  && item.quantity > 1 ? { 
+            ...item,
+            quantity : item.quantity - 1,
+            subtotal : item.price *  ( item.quantity  - 1 )
+        }  : item )
+
+        // seteamos en el state
+        set(() => ({
+            order : item
+        }))
+
     }
+
 }))
