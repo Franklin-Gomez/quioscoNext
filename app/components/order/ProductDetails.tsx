@@ -15,6 +15,7 @@ export default function ProductDetails( { item } : ProductCardPros) {
 
     const increaseQuantity = useStore((state) => state.increaseQuantity)
     const decreaseQuantity = useStore((state) => state.decreaseQuantity)
+    const removeItem = useStore((state) => state.removeItem )
 
     const diableDecreaseButton = useMemo(() => item.quantity === MIN_ITEM , [ item ])
     const disableIncreaseButon = useMemo(() => item.quantity === MAX_ITEM , [ item ])
@@ -27,7 +28,7 @@ export default function ProductDetails( { item } : ProductCardPros) {
 
                     <button
                         type="button"
-                        onClick={() => {}}
+                        onClick={() => removeItem(item.id) }
                     >
                         <XCircleIcon className="text-red-600 h-8 w-8"/>
                     </button>
@@ -42,7 +43,7 @@ export default function ProductDetails( { item } : ProductCardPros) {
                         type="button"
                         onClick={() => decreaseQuantity( item.id )}
                         disabled={ diableDecreaseButton }
-                        className="diabled:opacity-20"
+                        className="disabled:opacity-20"
                     >
                         <MinusIcon className="h-6 w-6"/>
                     </button>
@@ -55,6 +56,7 @@ export default function ProductDetails( { item } : ProductCardPros) {
                         type="button"
                         onClick={() => increaseQuantity( item.id )}
                         disabled={ disableIncreaseButon }
+                         className="disabled:opacity-20"
                     >
                         <PlusIcon className="h-6 w-6"/>
                     </button>
