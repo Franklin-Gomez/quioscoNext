@@ -12,9 +12,10 @@ export default function OrderSummary() {
     const order = useStore( ( state ) => state.order )
     const total = useMemo(() =>  order.reduce( ( acc , item ) => acc + ( item.price * item.quantity ) , 0) ,[order] ) 
 
-    const handleCreateOrder = () => { 
+    const handleCreateOrder = ( formData : FormData) => { 
         // validaciones en el cliente 
         console.log( 'desde el handler ')
+        console.log( formData.get('name'))
 
         // ejecutariamos el use Server
         createOrder()
@@ -52,6 +53,13 @@ export default function OrderSummary() {
                             className="w-full m-10 space-y-5"
                             
                         >
+
+                            <input 
+                                type="text" 
+                                placeholder="Tu Nombre"
+                                className="bg-white border border-gray-100 p-2 w-full"
+                                name="name"
+                            />
 
                             <input
                                 type="submit"
