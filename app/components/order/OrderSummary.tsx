@@ -38,6 +38,19 @@ export default function OrderSummary() {
 
                         </p>
 
+                        <form 
+                            action=""
+                            className="w-full m-10 space-y-5"
+                        >
+
+                            <input
+                                type="submit"
+                                className="py-2 rounded uppercase text-white bg-black w-full text-center cursor-pointer font-bold"
+                                value='Confirmar Peido'
+                            />
+                            
+                        </form>
+
                     </div>
                 )
 
