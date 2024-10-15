@@ -12,6 +12,8 @@ model Category {
   id Int  @id  @default(autoincrement())
   name String
   slug String
+
+  // referencia de la tabla de Product - Primary Key
   products Product[]
 }
 
@@ -20,6 +22,37 @@ model Product {
   name String
   price Float
   image String
+
+  // referencia de la tabla de category
   categoryId Int
   category Category @relation(fields: [categoryId] , references: [ id ])
+
+  // referencia de la tabla de orderProduct - Primary Key
+  orderProduct OrderProducts[]
+}
+
+model Order { 
+  id Int @id @default(autoincrement())
+  name String
+  total Float
+  date DateTime  @default( now() )
+  status Boolean @default( false )
+  orderReadyAt DateTime?
+
+  // relacion de order a orderProduct - Primar
+  orderProduct  OrderProducts[]
+}
+
+
+// tabla pivot entre order y products
+model OrderProducts { 
+  id Int @id @default( autoincrement() )
+  
+  // referecia a la tabla de Order
+  orderId Int
+  order Order @relation( fields: [orderId] , references: [id])
+
+  // referencia de la tabla de product
+  productId Int
+  product Product @relation( fields: [productId] , references: [id])
 }

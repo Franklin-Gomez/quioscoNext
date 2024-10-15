@@ -31,7 +31,7 @@ export default function OrderSummary() {
                         ))}
 
                         <p className="text-2xl mt-20 text-center">
-                            
+
                             Total a pagar : {''}
 
                             <span className="font-bold">{formatCurrency( total )}</span>
@@ -42,6 +42,7 @@ export default function OrderSummary() {
                 )
 
             }
+            
         </aside>
     )
 }
