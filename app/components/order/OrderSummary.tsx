@@ -13,6 +13,7 @@ export default function OrderSummary() {
     // leemos el state
     const order = useStore( ( state ) => state.order )
     const total = useMemo(() =>  order.reduce( ( acc , item ) => acc + ( item.price * item.quantity ) , 0) ,[order] ) 
+    const clearOrder = useStore(( state) => state.clearOrder)
 
     const handleCreateOrder = async ( formData : FormData) => { 
 
@@ -26,11 +27,9 @@ export default function OrderSummary() {
         const result = OrderSchema.safeParse(data)
 
         if(!result.success) { 
-
             result.error.issues.forEach((issue) =>{
                 toast.error( issue.message )
             })
-
             return
         }
 
@@ -42,7 +41,8 @@ export default function OrderSummary() {
             })
         }
 
-        return
+        toast.success('Pedido Realizado Correctamente')
+        clearOrder()
         
     }
 
