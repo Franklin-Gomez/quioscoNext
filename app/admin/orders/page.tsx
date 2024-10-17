@@ -1,8 +1,9 @@
+import Heading from "@/app/components/ui/Heading"
 
 export default function page() {
   return (
-    <div>
-      Admin page
-    </div>
+    <>
+      <Heading> Administrar Ordenes </Heading>
+    </>
   )
 }
