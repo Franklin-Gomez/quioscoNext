@@ -2,6 +2,7 @@
 
 import { prisma } from "@/src/lib/prisma"
 import { OrderIdSchema } from "@/src/schema"
+import { revalidatePath } from "next/cache"
 
 export const completeOrder = async ( formData : FormData ) => { 
     
@@ -27,6 +28,8 @@ export const completeOrder = async ( formData : FormData ) => {
                     orderReadyAt : new Date( Date.now())
                 }
             })
+
+            revalidatePath('/admin/order')
     
         } catch (error) {
             console.log( error )
