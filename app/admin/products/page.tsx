@@ -5,11 +5,19 @@ import { prisma } from "@/src/lib/prisma";
 
 async function getProducts () { 
 
-  const products = await prisma.product.findMany()
+  const products = await prisma.product.findMany({
+    include : { 
+      category : true
+    }
+  })
 
   return products
 
 }
+
+// Awaited interface
+// returnType eneric
+export type ProductWithCategory = Awaited<ReturnType<typeof getProducts>>
 
 export default async function page() {
 
