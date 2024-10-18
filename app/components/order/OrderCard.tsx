@@ -40,6 +40,14 @@ export default function OrderCard({ order } : OrderCardProps) {
             </dl>
 
             <form action={completeOrder} >
+
+                {/* se pasa en automatico */}
+                <input
+                    type="hidden"
+                    value={order.id}
+                    name="order_id"
+                />
+
                 <input
                     type="submit"
                     className="bg-indigo-600 hover:bg-indigo-800 text-white w-full mt-5 p-3 uppercase font-bold cursor-pointer"
