@@ -2,6 +2,7 @@ import ProductsPagination from "@/app/components/products/ProductsPagination";
 import ProductTable from "@/app/components/products/ProductTablet";
 import Heading from "@/app/components/ui/Heading";
 import { prisma } from "@/src/lib/prisma";
+import { redirect } from "next/navigation";
 
 
 async function productCount() { 
@@ -45,8 +46,18 @@ export default async function page( { searchParams } : { searchParams : { page :
 
   const totalProductsData = productCount()
 
+  if( page < 0) { 
+    redirect('/admin/products')
+  }
+
   // como son dos consultas y no dependen de una de la otra, las podemos hacer al mismo tiempo
   const [ products , totalProducts ] = await Promise.all([ productsData , totalProductsData])
+
+  const totalPage = Math.ceil( totalProducts / pageSize )
+
+  if( page > totalPage ) { 
+    redirect('/admin/products')
+  }
   
 
   return (
@@ -59,6 +70,7 @@ export default async function page( { searchParams } : { searchParams : { page :
 
       <ProductsPagination 
         page={page}
+        totalPage={totalPage}
       />
     
     </>
