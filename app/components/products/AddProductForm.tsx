@@ -1,11 +1,14 @@
 "use client"
 
+import { createProduct } from "@/actions/create-product-action"
 import { ProductSchema } from "@/src/schema"
-import { error } from "console"
+import { useRouter } from "next/navigation"
 import { toast } from "react-toastify"
 
 
 export default function AddProductForm( { children } : { children : React.ReactNode}) {
+
+    const router = useRouter()
 
     const handleSubmit = async ( formData : FormData) => { 
         
@@ -13,7 +16,8 @@ export default function AddProductForm( { children } : { children : React.ReactN
         const data = { 
             name: formData.get('name'),
             price : formData.get('price'),
-            categoryId : formData.get('categoryId')
+            categoryId : formData.get('categoryId'),
+            image : formData.get('image')
         }
         
         // validacion del formulario por el cliente
@@ -28,6 +32,22 @@ export default function AddProductForm( { children } : { children : React.ReactN
             return
 
         }
+
+        // actions
+        const response = await createProduct( result.data )
+
+        // validacion del servidor
+        if( response?.errors ) { 
+            
+            response.errors.forEach( issue => { 
+                toast.error( issue.message )
+            })
+
+            return
+        }
+
+        toast.success('Producto Creado Correctamente')
+        router.push('/admin/products')
 
     }
 
