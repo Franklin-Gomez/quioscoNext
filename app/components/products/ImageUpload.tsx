@@ -1,10 +1,11 @@
 "use client"
+import { getImagePath } from "@/src/utils"
 import { CldUploadWidget } from "next-cloudinary"
 import Image from "next/image"
 import { useState } from "react"
 import { TbPhotoPlus } from "react-icons/tb"
 
-export default function ImageUpload() {
+export default function ImageUpload( { image } : {  image: string | undefined}) {
 
     const [ imageURL , setImageUrl ] = useState('')
 
@@ -64,10 +65,25 @@ export default function ImageUpload() {
                         
 
                     </div>
+                    
+                    {/* muestra la imagen que ya esta en base de datos, pero al momento de guardar una nueva y aun no haber guardado cambios solo se mostrara la nueva*/}
+                    {image && !imageURL && ( 
+                        <div className="space-y-2">
+                            <label>Imagen Actual : </label>
+                            <div className="relative w-64 h-64">
+                                <Image
+                                    fill
+                                    src={getImagePath(image)}
+                                    alt='Producto Imagen'
+                                    
+                                />
+                            </div>
+                        </div>
+                    )}
 
                     <input
                         type='hidden'
-                        value={imageURL}
+                        defaultValue={imageURL ?  imageURL : image }
                         name="image"
                     />
                 
