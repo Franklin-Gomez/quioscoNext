@@ -1,6 +1,7 @@
 import OrderCard from "@/app/components/order/OrderCard"
 import Heading from "@/app/components/ui/Heading"
 import { prisma } from "@/src/lib/prisma"
+import { revalidatePath } from "next/cache"
 
 async function getPendingOrders(){
 
@@ -34,6 +35,21 @@ export default async function page() {
   return (
     <>
       <Heading> Administrar Ordenes </Heading>
+
+      <form
+        action={ async () => { 
+          "use server"
+          revalidatePath('/admin/orders')
+        }}
+      > 
+
+        <input
+          type="submit"
+          value='Actualizar Ordenes'
+          className='bg-amber-400 w-full lg:w-auto text-xl px-10 py-3 text-center font-bold cursor-pointer'
+        />
+
+      </form>
 
       { orders.length ?
         
