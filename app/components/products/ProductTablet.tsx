@@ -1,6 +1,5 @@
 import { ProductWithCategory } from "@/app/admin/products/page"
 import { formatCurrency } from "@/src/utils"
-import { Product } from "@prisma/client"
 import Link from "next/link"
 
 type ProductTableProps = { 

@@ -5,13 +5,13 @@ import Heading from "@/app/components/ui/Heading"
 import { OrderWithProducts } from "@/src/types"
 import useSWR from "swr"
 
-export default function page() {
+export default function Page() {
 
   const url = '/admin/orders/api'
   const fetcher = () => fetch(url).then( res => res.json() ).then( data => data )
   
 
-  const { data , error , isLoading } = useSWR<OrderWithProducts[]>( url , fetcher, { 
+  const { data , isLoading } = useSWR<OrderWithProducts[]>( url , fetcher, { 
    refreshInterval: 60000,
    revalidateOnFocus: false
   })

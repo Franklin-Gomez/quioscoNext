@@ -16,7 +16,7 @@ export const useStore = create<Store>((set , get ) => ({
 
     addToCart( product ) {
         
-        const { image , categoryId , ...data } = product
+        const { ...data } = product
 
         let item : OrderItem[] = []
 

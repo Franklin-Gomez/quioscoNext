@@ -17,7 +17,7 @@ export default function ImageUpload( { image } : {  image: string | undefined}) 
                     
                     widget.close()
 
-                    // @ts-ignore
+                    // @ts-expect-error = por que si las que vuelan papi
                     setImageUrl( result.info.secure_url)
                 }
             }}
